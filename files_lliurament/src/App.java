@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class    App {
 
@@ -14,21 +15,28 @@ public class    App {
         //de forma desordenada
         printStudents(students, message);
 
-        //TODO Guardar la llista d'estudiants al fitxer students.out
+        saveToFile(students, message, file, true);
+        System.out.println(readFromFile(file));
         //TODO Torna a imprimir la llista d'estudiants
         //però ara llegint-la del fitxer students.out
 
     }
 
     static String readFromFile(File file) throws IOException{
-        //TODO Implementar usant FileReader
-        //No podeu usar BufferedReader
+        FileReader lector_archivo = new FileReader(file);
+        StringBuilder constructor_string = new StringBuilder();
+        int character;
+        while((character = lector_archivo.read()) != -1){
+            constructor_string.append((char)character);
+        }
+        return constructor_string.toString().replace(", ", "\r");
+        //No podeu usar BufferedReader<
     }
 
-    static void saveToFile(Student[] students, String message,
-                           File file, boolean append)
-            throws IOException {
-        //TODO Implementar usant FileWriter
+    static void saveToFile(Student[] students, String message, File file, boolean append) throws IOException {
+        FileWriter escritor_archivo = new FileWriter(file, true);
+        escritor_archivo.write(Arrays.toString(students).replace(", ", "\r").concat("\r"));
+        escritor_archivo.close();
         //No podeu usar BufferedWriter
     }
 
